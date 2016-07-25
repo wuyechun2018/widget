@@ -12,15 +12,52 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>widget-jdbc</name>
   <url>http://maven.apache.org</url>
+  
+  
+  <repositories>
+		<repository>
+			<id>nexus-sinovate</id>
+			<name>Team Nexus Repository</name>
+			<url>http://60.174.249.202:8181/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+  
+  
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.10</version>
+		</dependency>
   </dependencies>
+  
+  	<build>
+  		<plugins>
+  			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.7.1</version>
+				<executions>  
+					<execution>  
+						<phase>package</phase>  
+						<goals>  
+							<goal>shade</goal>  
+						</goals>
+						<configuration>  
+							<transformers>  
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">  
+									<mainClass>org.widget.jdbc.App</mainClass>
+								</transformer>  
+							</transformers>  
+						</configuration>    
+					</execution>
+				</executions>
+			</plugin>
+  		</plugins>
+  	</build>
+  
 </project>
