@@ -45,8 +45,8 @@ public class JdbcUtil {
 		try {
 			conn = DriverManager.getConnection(url,user,password);
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
+			System.out.println("getDbConn error:"+e.getMessage());
+		}
 		return conn;
 	}
 	
@@ -65,26 +65,27 @@ public class JdbcUtil {
 	 * @since JDK 1.7
 	 */
 	public static int doQuery(String sql,String url,String user,String password) {
-		
-		
-		
 		int count=0;
 		try {
 			Connection  conn=getDbConn(url,user,password);
-			PreparedStatement pstm =conn.prepareStatement(sql);
-			ResultSet rs = pstm.executeQuery();
-		
-			if (rs.next()) {
-				count = rs.getInt(1);
-			}
-			rs.close();
-			//关闭连接
-			if (pstm != null) {
-				pstm.close();
-			}
 			if(conn!=null){
-				conn.close();
+				PreparedStatement pstm =conn.prepareStatement(sql);
+				ResultSet rs = pstm.executeQuery();
+			
+				if (rs.next()) {
+					count = rs.getInt(1);
+				}
+				rs.close();
+				//关闭连接
+				if (pstm != null) {
+					pstm.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
 			}
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
