@@ -25,6 +25,7 @@ public class App {
 	 */
 	public static void main(String[] args) {
 		
+		
 		//String url = "jdbc:oracle:thin:@172.16.7.116:1521:center";
 		//String user="center"; 
 		//String password="123456";
@@ -38,11 +39,24 @@ public class App {
 		String user=sc.nextLine();
 		System.out.println("The DB password IS(centerDB12345):");
 		String password=sc.nextLine();
-		System.out.println("The Query SQL IS(SELECT COUNT(1) FROM PSN_PERSON):");
-		String sql=sc.nextLine();
+		//System.out.println("The Query SQL IS(SELECT COUNT(1) FROM PSN_PERSON):");
+		//String sql=sc.nextLine();
 		
-		int count=JdbcUtil.doQuery(sql, url, user, password);
-		System.out.println("The Result IS:"+count);
+		//int count=JdbcUtil.doQueryCount(sql, url, user, password);
+		//System.out.println("The Result IS:"+count);
+		System.out.println("The Query SQL IS(SELECT * FROM (SELECT T.*, ROWNUM RN FROM PSN_PERSON T)WHERE RN > 5 AND RN < 10):");
+		String sql=sc.nextLine();
+		int count=JdbcUtil.doQueryCount(JdbcUtil.getCountSQL(sql), url, user, password);
+		if(count>50){
+			System.out.println("The Query result is:"+count+",Do you really want to disyplay some of them(Y/N)?");
+		}
+		String choice=sc.nextLine();
+		if(choice!=null&&"Y".equals(choice)){
+			//返回1-100条数据
+			JdbcUtil.doQuery(JdbcUtil.getLimitSQL(sql,"1","100"), url, user, password);
+		}else{
+			JdbcUtil.doQuery(JdbcUtil.getLimitSQL(sql,"1","10"), url, user, password);
+		}
 		
 	}
 }
