@@ -7,9 +7,7 @@
     <groupId>com.wuyechun</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.wuyechun</groupId>
   <artifactId>widget-excel</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>widget-excel</name>
   <url>http://maven.apache.org</url>
   <properties>
